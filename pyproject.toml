@@ -1,0 +1,8 @@
+[project]
+name = "json-parser"
+version = "0.1.0"
+description = "JSON parser built from scratch"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
