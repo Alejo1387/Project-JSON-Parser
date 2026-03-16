@@ -51,6 +51,9 @@ class Lexer:
         while self.position < len(self.text) and self.text[self.position] != '"':
             self.position += 1
 
+        if self.position >= len(self.text):
+            raise ValueError("Unterminated string")
+
         value = self.text[start:self.position]
 
         self.position += 1
