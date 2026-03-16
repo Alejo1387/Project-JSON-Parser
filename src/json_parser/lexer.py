@@ -38,6 +38,11 @@ class Lexer:
             elif char == '"':
                 tokens.append(self.read_string())
                 continue
+                
+            elif char.isdigit() or char == "-":
+                tokens.append(self.read_number())
+                continue
+
 
             self.position += 1
 
@@ -59,3 +64,21 @@ class Lexer:
         self.position += 1
 
         return Token(TokenType.STRING, value)
+    
+    def read_number(self):
+        start = self.position
+
+        while self.position < len(self.text) and (
+            self.text[self.position].isdigit()
+            or self.text[self.position] in ".eE+-"
+        ):
+            self.position += 1
+
+        num_str = self.text[start:self.position]
+
+        if "." in num_str or "e" in num_str or "E" in num_str:
+            value = float(num_str)
+        else:
+            value = int(num_str)
+
+        return Token(TokenType.NUMBER, value)
