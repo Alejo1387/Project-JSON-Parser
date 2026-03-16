@@ -66,3 +66,21 @@ def test_negative_number():
     tokens = lexer.tokenize()
 
     assert tokens[0].value == -5
+
+def test_true_token():
+    lexer = Lexer("true")
+    tokens = lexer.tokenize()
+
+    assert tokens[0].value is True
+
+def test_false_token():
+    lexer = Lexer("false")
+    tokens = lexer.tokenize()
+
+    assert tokens[0].value is False
+
+def test_null_token():
+    lexer = Lexer("null")
+    tokens = lexer.tokenize()
+
+    assert tokens[0].value is None
