@@ -48,3 +48,21 @@ def test_unterminated_string():
 
     with pytest.raises(ValueError):
         lexer.tokenize()
+
+def test_integer_number():
+    lexer = Lexer("123")
+    tokens = lexer.tokenize()
+
+    assert tokens[0].value == 123
+
+def test_float_number():
+    lexer = Lexer("3.14")
+    tokens = lexer.tokenize()
+
+    assert tokens[0].value == 3.14
+
+def test_negative_number():
+    lexer = Lexer("-5")
+    tokens = lexer.tokenize()
+
+    assert tokens[0].value == -5
