@@ -25,3 +25,19 @@ def test_whitespace_ignored():
     assert tokens[0].type == TokenType.LEFT_BRACE
     assert tokens[1].type == TokenType.RIGHT_BRACE
     assert tokens[2].type == TokenType.EOF
+
+def test_string_token():
+    lexer = Lexer('"hello"')
+    tokens = lexer.tokenize()
+
+    assert tokens[0].type == TokenType.STRING
+    assert tokens[0].value == "hello"
+    assert tokens[1].type == TokenType.EOF
+
+def test_object_with_string():
+    lexer = Lexer('{"name":"alex"}')
+    tokens = lexer.tokenize()
+
+    assert tokens[0].type.name == "LEFT_BRACE"
+    assert tokens[1].value == "name"
+    assert tokens[3].value == "alex"
