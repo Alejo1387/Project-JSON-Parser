@@ -35,7 +35,24 @@ class Lexer:
             elif char == ",":
                 tokens.append(Token(TokenType.COMMA))
 
+            elif char == '"':
+                tokens.append(self.read_string())
+                continue
+
             self.position += 1
 
         tokens.append(Token(TokenType.EOF))
         return tokens
+
+    def read_string(self):
+        self.position += 1
+        start = self.position
+
+        while self.position < len(self.text) and self.text[self.position] != '"':
+            self.position += 1
+
+        value = self.text[start:self.position]
+
+        self.position += 1
+
+        return Token(TokenType.STRING, value)
