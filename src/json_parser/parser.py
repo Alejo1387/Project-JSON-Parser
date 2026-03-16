@@ -20,7 +20,12 @@ class Parser:
             raise ValueError(f"Expected {token_type}, got {token.type}")
 
     def parse(self):
-        return self.parse_value()
+        value = self.parse_value()
+
+        if self.current_token().type != TokenType.EOF:
+            raise ValueError("Unexpected data after JSON value")
+
+        return value
     
     def parse_value(self):
         token = self.current_token()
