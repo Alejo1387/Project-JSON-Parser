@@ -81,3 +81,25 @@ class Parser:
         self.eat(TokenType.RIGHT_BRACE)
 
         return obj
+    
+    def parse_array(self):
+        array = []
+
+        self.eat(TokenType.LEFT_BRACKET)
+
+        if self.current_token().type == TokenType.RIGHT_BRACKET:
+            self.eat(TokenType.RIGHT_BRACKET)
+            return array
+
+        while True:
+            value = self.parse_value()
+            array.append(value)
+
+            if self.current_token().type == TokenType.COMMA:
+                self.eat(TokenType.COMMA)
+            else:
+                break
+
+        self.eat(TokenType.RIGHT_BRACKET)
+
+        return array
