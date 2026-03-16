@@ -1,3 +1,4 @@
+import pytest
 from json_parser.lexer import Lexer
 from json_parser.tokens import TokenType
 
@@ -41,3 +42,9 @@ def test_object_with_string():
     assert tokens[0].type.name == "LEFT_BRACE"
     assert tokens[1].value == "name"
     assert tokens[3].value == "alex"
+
+def test_unterminated_string():
+    lexer = Lexer('"hello')
+
+    with pytest.raises(ValueError):
+        lexer.tokenize()
