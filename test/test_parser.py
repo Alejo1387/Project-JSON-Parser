@@ -28,3 +28,13 @@ def test_parse_array():
     result = parser.parse()
 
     assert result == [1,2,3]
+
+def test_extra_data_after_json():
+    lexer = Lexer('{"a":1} true')
+    tokens = lexer.tokenize()
+
+    parser = Parser(tokens)
+
+    import pytest
+    with pytest.raises(ValueError):
+        parser.parse()
