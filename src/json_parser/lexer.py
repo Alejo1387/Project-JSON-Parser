@@ -43,6 +43,10 @@ class Lexer:
                 tokens.append(self.read_number())
                 continue
 
+            elif char.isalpha():
+                tokens.append(self.read_keyword())
+                continue
+
 
             self.position += 1
 
@@ -82,3 +86,23 @@ class Lexer:
             value = int(num_str)
 
         return Token(TokenType.NUMBER, value)
+
+    def read_keyword(self):
+        start = self.position
+
+        while self.position < len(self.text) and self.text[self.position].isalpha():
+            self.position += 1
+
+        word = self.text[start:self.position]
+
+        if word == "true":
+            return Token(TokenType.TRUE, True)
+
+        elif word == "false":
+            return Token(TokenType.FALSE, False)
+
+        elif word == "null":
+            return Token(TokenType.NULL, None)
+
+        else:
+            raise ValueError(f"Unexpected keyword: {word}")
