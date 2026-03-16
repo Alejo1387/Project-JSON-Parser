@@ -19,3 +19,12 @@ def test_parse_simple_object():
     result = parser.parse()
 
     assert result == {"a": 1}
+
+def test_parse_array():
+    lexer = Lexer("[1,2,3]")
+    tokens = lexer.tokenize()
+
+    parser = Parser(tokens)
+    result = parser.parse()
+
+    assert result == [1,2,3]
