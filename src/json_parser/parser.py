@@ -53,3 +53,31 @@ class Parser:
 
         else:
             raise ValueError(f"Unexpected token: {token.type}")
+    
+    def parse_object(self):
+        obj = {}
+
+        self.eat(TokenType.LEFT_BRACE)
+
+        if self.current_token().type == TokenType.RIGHT_BRACE:
+            self.eat(TokenType.RIGHT_BRACE)
+            return obj
+
+        while True:
+            key_token = self.eat(TokenType.STRING)
+            key = key_token.value
+
+            self.eat(TokenType.COLON)
+
+            value = self.parse_value()
+
+            obj[key] = value
+
+            if self.current_token().type == TokenType.COMMA:
+                self.eat(TokenType.COMMA)
+            else:
+                break
+
+        self.eat(TokenType.RIGHT_BRACE)
+
+        return obj
